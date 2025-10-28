@@ -1,3 +1,9 @@
+# this script explores the probabilities of a wheel spininng game
+# imagine you spin two wheels at a time
+# one with numbers and one with letters
+# how are the probabilities that on one of the wheels appears a 3 OR a consonant on the other wheel?
+# and how big are the probabilities that no 3 AND no consonant appears?
+
 from random import choice
 from time import perf_counter
 

@@ -1,4 +1,4 @@
-# this script explores the probabilities of a wheel spininng game
+# this script explores the probabilities of a wheel spinning game
 # imagine you spin two wheels at a time
 # one with numbers and one with letters
 # how are the probabilities that on one of the wheels appears a 3 OR a consonant on the other wheel?
@@ -31,7 +31,7 @@ def count_spins(num_choice: int, letter_choice: int, count_hit: int, count_miss:
     count_total += 1
     if num_choice == NUM_WINNER or letter_choice in LETTER_WINNER: # winning conditions: 3 OR a consonant
         count_hit += 1
-    elif num_choice != NUM_WINNER and letter_choice not in LETTER_WINNER: # losing condition: no 3 AND no konsonant
+    elif num_choice != NUM_WINNER and letter_choice not in LETTER_WINNER: # losing condition: no 3 AND no consonant
         count_miss += 1
     return count_hit, count_miss, count_total
 
@@ -53,8 +53,8 @@ def main():
     hit_probability, miss_probability = calc_probability_result(count_hit, count_miss, count_total)
     
     print(f"""
-        Hit probability: {hit_probability:.2f}% | hits: {count_hit}\n
-        Miss probability: {miss_probability:.2f}% | misses: {count_miss}\n
+        Hit probability: {hit_probability:.2f}% | hits: {count_hit}
+        Miss probability: {miss_probability:.2f}% | misses: {count_miss}
         Total counts: {count_total}
         """)
     print(f"Performed in {(t2 - t1):.6f} seconds")

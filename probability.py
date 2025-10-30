@@ -84,9 +84,8 @@ def main():
         Simulation results after {DEF_ROUNDS:,} rounds:   
 
         Hit probability: {hit_probability:.2f} % | hits: {count_hit:,.0f}
-                        |
-                        \u2514\u2192 Numbers probability: {num_hit_probability:.2f} % | hits: {count_num_hit:,.0f}
-                        \u2514\u2192 Letters probability: {letter_hit_probability:.2f} % | hits: {count_letter_hit:,.0f}
+                        \u21B3 Numbers probability: {num_hit_probability:.2f} % | hits: {count_num_hit:,.0f}
+                        \u21B3 Letters probability: {letter_hit_probability:.2f} % | hits: {count_letter_hit:,.0f}
 
         Miss probability: {miss_probability:.2f} % | misses: {count_miss:,.0f}
         

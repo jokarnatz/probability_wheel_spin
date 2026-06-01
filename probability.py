@@ -1,6 +1,7 @@
 # this script explores the probabilities of a wheel spinning game
 # imagine you spin two wheels at a time
-# one with numbers and one with letters
+# one with 7 numbers -> 1,2,3,3,4,1,2
+# and one with 8 letters a - h
 # how are the probabilities that on one of the wheels appears a 3 OR a consonant on the other wheel?
 # and how big are the probabilities that no 3 AND no consonant appears?
 
@@ -10,15 +11,11 @@ from time import perf_counter
 NUM_WINNER: int = 3
 LETTER_WINNER: list = ['b','c','d','f','g','h']
 DEF_ROUNDS: int = 1_000_000
-     
 
-def create_lists() ->tuple[list,list]:
+
+def spin_wheel() ->tuple[int,int]:
     num_list = [1,2,3,2,3,1,2]
     letter_list = ['a','b','c','d','e','f','g','h']
-    return num_list, letter_list
-
-
-def spin_wheel(num_list: list, letter_list: list) ->tuple[int,int]:
     num_choice = choice(num_list)
     letter_choice = choice(letter_list)
     return num_choice, letter_choice
@@ -61,10 +58,9 @@ def main():
     count_total = 0
     rounds = 0
 
-    num_list, letter_list = create_lists()
     t1 = perf_counter()
     while rounds < DEF_ROUNDS:
-        num_choice, letter_choice = spin_wheel(num_list, letter_list)
+        num_choice, letter_choice = spin_wheel()
         count_hit, count_num_hit, count_letter_hit, count_miss, count_total = count_spins(
                 num_choice,
                 letter_choice,  

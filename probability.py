@@ -10,19 +10,13 @@ from time import perf_counter
 NUM_WINNER: int = 3
 LETTER_WINNER: list = ['b','c','d','f','g','h']
 DEF_ROUNDS: int = 1_000_000
+     
 
 def create_lists() ->tuple[list,list]:
     num_list = [1,2,3,2,3,1,2]
     letter_list = ['a','b','c','d','e','f','g','h']
     return num_list, letter_list
 
-def create_counts() ->tuple:
-    count_hit = 0
-    count_num_hit = 0
-    count_letter_hit = 0
-    count_miss = 0
-    count_total = 0
-    return count_hit, count_num_hit, count_letter_hit, count_miss, count_total
 
 def spin_wheel(num_list: list, letter_list: list) ->tuple[int,int]:
     num_choice = choice(num_list)
@@ -31,21 +25,24 @@ def spin_wheel(num_list: list, letter_list: list) ->tuple[int,int]:
     
 def count_spins(
         num_choice: int, 
-        letter_choice: int, 
-        count_hit: int, 
-        count_num_hit: int, 
-        count_letter_hit: int, 
-        count_miss: int, 
-        count_total: int
-        ) ->tuple:
+        letter_choice: int,
+        count_hit,
+        count_num_hit,
+        count_letter_hit,
+        count_miss,
+        count_total
+        ) ->tuple: 
     count_total += 1
-    if num_choice == NUM_WINNER: # winning conditions: 3 
+
+    if num_choice == NUM_WINNER and not letter_choice in LETTER_WINNER: # winning conditions: 3 
         count_num_hit += 1
         count_hit += 1
-    elif letter_choice in LETTER_WINNER: # winning conditions: consonant
+    elif letter_choice in LETTER_WINNER and not num_choice == NUM_WINNER: # winning conditions: consonant
         count_letter_hit += 1
         count_hit += 1
     elif num_choice != NUM_WINNER and letter_choice not in LETTER_WINNER: # losing condition: no 3 AND no consonant
+        count_miss += 1
+    else:
         count_miss += 1
     return count_hit, count_num_hit, count_letter_hit, count_miss, count_total
 
@@ -57,20 +54,25 @@ def calc_probability_result(count_hit: int, count_num_hit: int, count_letter_hit
     return hit_probability, num_hit_probability, letter_hit_probability, miss_probability
 
 def main():
-    num_list, letter_list = create_lists()
-    count_hit, count_num_hit, count_letter_hit, count_miss, count_total = create_counts()
+    count_hit = 0
+    count_num_hit = 0
+    count_letter_hit = 0
+    count_miss = 0
+    count_total = 0
     rounds = 0
+
+    num_list, letter_list = create_lists()
     t1 = perf_counter()
     while rounds < DEF_ROUNDS:
         num_choice, letter_choice = spin_wheel(num_list, letter_list)
         count_hit, count_num_hit, count_letter_hit, count_miss, count_total = count_spins(
-            num_choice,
-            letter_choice, 
-            count_hit, 
-            count_num_hit, 
-            count_letter_hit, 
-            count_miss, 
-            count_total)
+                num_choice,
+                letter_choice,  
+                count_hit,
+                count_num_hit,
+                count_letter_hit,
+                count_miss,
+                count_total)
         rounds += 1
     t2 = perf_counter()
     hit_probability, num_hit_probability, letter_hit_probability, miss_probability = calc_probability_result(count_hit, count_num_hit, count_letter_hit, count_miss, count_total)
@@ -84,8 +86,8 @@ def main():
         Simulation results after {DEF_ROUNDS:,} rounds:   
 
         Hit probability: {hit_probability:.2f} % | hits: {count_hit:,.0f}
-                        \u21B3 Numbers probability: {num_hit_probability:.2f} % | hits: {count_num_hit:,.0f}
-                        \u21B3 Letters probability: {letter_hit_probability:.2f} % | hits: {count_letter_hit:,.0f}
+                        \u21B3 Number 3 probability: {num_hit_probability:.2f} % | hits: {count_num_hit:,.0f}
+                        \u21B3 Consonant probability: {letter_hit_probability:.2f} % | hits: {count_letter_hit:,.0f}
 
         Miss probability: {miss_probability:.2f} % | misses: {count_miss:,.0f}
         
